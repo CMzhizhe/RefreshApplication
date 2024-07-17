@@ -14,7 +14,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 public class RefreshModuleImpl extends AbsModelImpl implements OnRefreshListener {
     private OnRefreshCallListener mOnRefreshCallListener = null;
     private SmartRefreshLayout mSmartRefreshLayout = null;
-    public RefreshModuleImpl(SuperSmartRefreshPreLoadRecyclerView superRecyclerView,SmartRefreshLayout smartRefreshLayout, BaseQuickAdapter baseQuickAdapter) {
+    public RefreshModuleImpl(SuperSmartRefreshPreLoadRecyclerView superRecyclerView, BaseQuickAdapter baseQuickAdapter,SmartRefreshLayout smartRefreshLayout) {
         super(superRecyclerView, baseQuickAdapter);
         this.mSmartRefreshLayout = smartRefreshLayout;
         mSmartRefreshLayout.setOnRefreshListener(this);

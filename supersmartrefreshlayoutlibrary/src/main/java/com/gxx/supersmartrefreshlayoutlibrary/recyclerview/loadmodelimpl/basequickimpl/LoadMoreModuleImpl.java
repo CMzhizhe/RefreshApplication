@@ -113,7 +113,7 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
 
     public void setLoadMorePageIndex(int loadMorePageIndex) {
         this.loadMorePageIndex = loadMorePageIndex;
-        if(loadMorePageIndex == 1){
+        if(loadMorePageIndex == 1 && quickAdapterHelper.getTrailingLoadStateAdapter()!=null && quickAdapterHelper.getTrailingLoadStateAdapter().isAutoLoadMore()){
             //重置状态
             quickAdapterHelper.setTrailingLoadState(LoadState.None.INSTANCE);
         }

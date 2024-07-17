@@ -34,7 +34,13 @@ class MainActivity : ComponentActivity(), OnMARefreshListener, OnMALoadMoreListe
             .builder();
 
         superRefreshRecyclerView = this.findViewById<SuperSmartRefreshPreLoadRecyclerView>(R.id.su_recyclerview)
-        superRefreshRecyclerView.init(LinearLayoutManager(this),mPreLoadAdapter,this,this)
+        superRefreshRecyclerView.init(LinearLayoutManager(this),mPreLoadAdapter,this,null)
+
+       /* superRefreshRecyclerView.postDelayed(object : Runnable{
+            override fun run() {
+                superRefreshRecyclerView.autoRefresh()
+            }
+        },2000)*/
     }
 
     override fun onRefresh() {

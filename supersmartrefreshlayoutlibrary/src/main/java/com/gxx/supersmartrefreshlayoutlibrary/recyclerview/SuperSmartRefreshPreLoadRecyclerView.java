@@ -93,19 +93,30 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
         if (onMARefreshListener!=null){
             this.onMAFRefreshListenerWeakReference = new WeakReference<OnMARefreshListener>(onMARefreshListener);
             smartRefreshLayout.setEnableRefresh(true);
-            mRefreshModuleImpl = new RefreshModuleImpl(this,smartRefreshLayout,adapter);
+            mRefreshModuleImpl = new RefreshModuleImpl(this,adapter,smartRefreshLayout);
             mRefreshModuleImpl.setOnRefreshCallListener(this);
         }else {
             smartRefreshLayout.setEnableRefresh(false);
         }
 
+
+        mLoadMoreModuleImpl = new LoadMoreModuleImpl(this,adapter);
         if(onMALoadMoreListener!=null){
             this.onMAFLoadMoreListenerWeakReference = new WeakReference<OnMALoadMoreListener>(onMALoadMoreListener);
-            mLoadMoreModuleImpl = new LoadMoreModuleImpl(this,adapter);
             mLoadMoreModuleImpl.setOnLoadMoreLoadListener(this);
             mLoadMoreModuleImpl.setPreLoadSize(preLoadNumber);
         }
 
+    }
+
+
+    /**
+      * 第一次触发刷新
+      */
+    public void autoRefresh(){
+        if(mRefreshModuleImpl!=null && smartRefreshLayout.isEnabled()){
+            smartRefreshLayout.autoRefresh();
+        }
     }
 
     /**
