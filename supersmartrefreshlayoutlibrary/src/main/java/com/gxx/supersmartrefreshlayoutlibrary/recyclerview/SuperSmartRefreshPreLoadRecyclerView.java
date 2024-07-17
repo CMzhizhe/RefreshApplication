@@ -78,6 +78,14 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
      * @preLoadNumber 预加载个数， > 0才会开启预加载
      **/
     public void init(RecyclerView.LayoutManager layoutManager, BaseQuickAdapter adapter, int preLoadNumber, final OnMARefreshListener onMARefreshListener, final OnMALoadMoreListener onMALoadMoreListener) {
+       if(layoutManager == null){
+           throw new IllegalArgumentException("未配置 layoutManager");
+       }
+
+        if(adapter == null){
+            throw new IllegalArgumentException("未配置 baseQuickAdapter");
+        }
+
         this.recyclerView.setLayoutManager(layoutManager);
         this.smartRefreshLayout.setEnableLoadMore(false);
         this.mBaseQuickAdapter = adapter;

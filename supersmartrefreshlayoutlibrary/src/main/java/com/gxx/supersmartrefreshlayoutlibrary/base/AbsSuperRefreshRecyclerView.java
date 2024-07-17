@@ -68,10 +68,7 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     }
 
 
-
-
     /**
-     * @date :2019/10/29 0029
      * @author : gaoxiaoxiong
      * @description:空视图View
      **/

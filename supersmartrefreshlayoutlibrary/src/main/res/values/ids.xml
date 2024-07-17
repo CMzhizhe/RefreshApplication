@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--SmartRefreshLayout-->
-    <item name="view_default_smart_refresh" type="id"/>
-    <!--Header-->
-    <item name="view_default_smart_refresh_header_view" type="id"/>
-    <!--Recyclerview-->
-    <item name="view_default_smart_recyclerview" type="id"/>
+
+
 </resources>

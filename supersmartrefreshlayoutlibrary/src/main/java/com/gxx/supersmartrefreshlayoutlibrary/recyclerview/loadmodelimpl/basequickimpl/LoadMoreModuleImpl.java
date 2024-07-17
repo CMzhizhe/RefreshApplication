@@ -26,7 +26,7 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
         super(superSmartRefreshPreLoadRecyclerView, baseQuickAdapter);
         quickAdapterHelper = new QuickAdapterHelper.Builder(baseQuickAdapter).setTrailingLoadStateAdapter(new DefaultTrailingLoadStateAdapter().setOnLoadMoreListener(this)).build();
         quickAdapterHelper.getTrailingLoadStateAdapter().setPreloadSize(1);
-        quickAdapterHelper.getTrailingLoadStateAdapter().setAutoLoadMore(onLoadMoreLoadListener != null);
+        quickAdapterHelper.getTrailingLoadStateAdapter().setAutoLoadMore(getSuperRecyclerView().getOnMAFLoadMoreListenerWeakReference() != null && getSuperRecyclerView().getOnMAFLoadMoreListenerWeakReference().get()!=null);
         superSmartRefreshPreLoadRecyclerView.getRecyclerView().setAdapter(quickAdapterHelper.getAdapter());
     }
 

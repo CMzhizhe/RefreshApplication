@@ -16,8 +16,11 @@ public class SuperSmartRefreshLayoutManager {
     private String networkUnavailableText;//当前网络不可用
     private boolean isDeveloper = false;//是否开发者
     private int pageCount = 10;//默认条数
-
     private static SuperSmartRefreshLayoutManager mSuperSmartRefreshLayoutManager = null;
+
+    private SuperSmartRefreshLayoutManager() {
+        super();
+    }
 
     public SuperSmartRefreshLayoutManager(Builder builder) {
         this.mAssetsRefreshHeader = builder.assetsRefreshHeader;
@@ -41,6 +44,9 @@ public class SuperSmartRefreshLayoutManager {
     }
 
     public static SuperSmartRefreshLayoutManager getInstance() {
+        if(mSuperSmartRefreshLayoutManager == null){
+            mSuperSmartRefreshLayoutManager = new SuperSmartRefreshLayoutManager();
+        }
         return mSuperSmartRefreshLayoutManager;
     }
 
