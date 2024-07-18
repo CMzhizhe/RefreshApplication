@@ -15,6 +15,14 @@ dependencyResolutionManagement {
 	}
 
  implementation 'com.github.CMzhizhe:RefreshApplication:v1.0.6'
+
+ implementation  'io.github.scwang90:refresh-layout-kernel:2.0.6'      //核心必须依赖
+ implementation  'io.github.scwang90:refresh-header-classics:2.0.6'    //经典刷新头
+ implementation  'io.github.scwang90:refresh-header-material:2.0.6'    //谷歌刷新头
+ implementation  'io.github.scwang90:refresh-footer-classics:2.0.6'    //经典加载
+    
+ implementation "com.airbnb.android:lottie:4.1.0"
+ implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper4:4.1.4"
 ```
 
 ```
