@@ -106,7 +106,18 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
             mLoadMoreModuleImpl.setOnLoadMoreLoadListener(this);
             mLoadMoreModuleImpl.setPreLoadSize(preLoadNumber);
         }
+    }
 
+    /**
+      * 设置空视图,只有集合是空的时候才有效果
+      */
+    public void setEmptyView(Context context,int layoutResId){
+        if(mBaseQuickAdapter!=null){
+            if(!mBaseQuickAdapter.isStateViewEnable()){
+                mBaseQuickAdapter.setStateViewEnable(true);
+            }
+            mBaseQuickAdapter.setStateViewLayout(context,layoutResId);
+        }
     }
 
 

@@ -2,18 +2,12 @@ package com.gxx.supersmartrefreshlayoutlibrary.base;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,12 +16,10 @@ import com.gxx.supersmartrefreshlayoutlibrary.R;
 import com.gxx.supersmartrefreshlayoutlibrary.SuperSmartRefreshLayoutManager;
 import com.gxx.supersmartrefreshlayoutlibrary.inter.OnMALoadMoreListener;
 import com.gxx.supersmartrefreshlayoutlibrary.inter.OnMARefreshListener;
-import com.gxx.supersmartrefreshlayoutlibrary.utils.SuDensityUtil;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 
 /**
@@ -40,9 +32,6 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     protected RefreshHeader superSmartRefreshHeaderView = null;//头部
     protected RecyclerView recyclerView = null;
     protected int pageCount = SuperSmartRefreshLayoutManager.getInstance().getPageCount();//默认条数
-    protected View emptyView = null;//空视图
-    protected ImageView ivEmptyImageView = null;
-    protected TextView tvEmptyTextView = null;
     protected volatile boolean isLoadingData = false;//是否正在请求数据，包含，上拉于下拉
     protected WeakReference<OnMALoadMoreListener> onMAFLoadMoreListenerWeakReference = null;
     protected WeakReference<OnMARefreshListener> onMAFRefreshListenerWeakReference = null;//下拉刷新
@@ -64,24 +53,9 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
         superSmartRefreshHeaderView = view.findViewById(R.id.view_default_smart_refresh_header_view);
         smartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
         smartRefreshLayout.setBackground(getBackground());
-        initEmptyView(getContext());
     }
 
 
-    /**
-     * @author : gaoxiaoxiong
-     * @description:空视图View
-     **/
-    private void initEmptyView(Context context) {
-        emptyView = LayoutInflater.from(context).inflate(R.layout.su_view_recyclerview_empty, this, false);
-        if (emptyView != null) {
-            ivEmptyImageView = emptyView.findViewById(R.id.iv_view_recyclerview_empty);
-            tvEmptyTextView = emptyView.findViewById(R.id.iv_view_recyclerview_data);
-            if (!TextUtils.isEmpty(SuperSmartRefreshLayoutManager.getInstance().getLoadEndText())) {
-                tvEmptyTextView.setText(SuperSmartRefreshLayoutManager.getInstance().getLoadEndText());
-            }
-        }
-    }
 
 
     /**
@@ -97,81 +71,6 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
      */
     public void setAbsBackDrawable(Drawable drawable) {
         smartRefreshLayout.setBackground(drawable);
-    }
-
-
-    /**
-     * 显示空视图
-     **/
-    public void showEmpty() {
-        if (emptyView != null && emptyView.getParent() == null) {
-            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-            emptyView.setLayoutParams(layoutParams);
-            this.addView(emptyView);
-        }
-    }
-
-    /**
-     * 隐藏空视图
-     **/
-    public void hideEmpty() {
-        if (emptyView != null && emptyView.getParent() != null) {
-            this.removeView(emptyView);
-        }
-    }
-
-    /**
-     * 设置空数据的文本信息
-     **/
-    public void setTvEmptyText(String emptyText, int color, int textSize) {
-        if (emptyView != null && tvEmptyTextView != null) {
-            if (color != 0) {
-                tvEmptyTextView.setTextColor(color);
-            }
-            if (textSize > 0) {
-                tvEmptyTextView.setTextSize(textSize);
-            }
-            tvEmptyTextView.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(emptyText)) {
-                tvEmptyTextView.setText(emptyText);
-            } else {
-                tvEmptyTextView.setText("");
-            }
-        }
-    }
-
-    /**
-     * 设置空的图片展示
-     **/
-    public void setIvEmptyImageView(Drawable drawable, int widthDp, int heightDp) {
-        if (emptyView != null && ivEmptyImageView != null) {
-            if (widthDp != 0 && heightDp != 0) {
-                ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) ivEmptyImageView.getLayoutParams();
-                layoutParams.width = SuDensityUtil.getInstance().dip2px(widthDp);
-                layoutParams.height = SuDensityUtil.getInstance().dip2px(heightDp);
-                ivEmptyImageView.setLayoutParams(layoutParams);
-            }
-            ivEmptyImageView.setImageDrawable(drawable);
-        }
-    }
-
-    /**
-     * 设置空的图片，文字
-     */
-    public void setIvEmptyImageViewAndTvEmptyText(Drawable drawable, int drawableWidthDp, int drawableHeightDp, String emptyText, int color, int textSize) {
-        setIvEmptyImageView(drawable, drawableWidthDp, drawableHeightDp);
-        setTvEmptyText(emptyText, color, textSize);
-    }
-
-    /**
-     * 设置空的图片展示
-     **/
-    public void setIvEmptyImageView(Drawable drawable, ConstraintLayout.LayoutParams layoutParams) {
-        if (emptyView != null && ivEmptyImageView != null) {
-            ivEmptyImageView.setLayoutParams(layoutParams);
-            ivEmptyImageView.setImageDrawable(drawable);
-        }
     }
 
 
@@ -301,15 +200,6 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
 
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
-    }
-
-
-    public void setEmptyView(View emptyView) {
-        this.emptyView = emptyView;
-    }
-
-    public View getEmptyView() {
-        return emptyView;
     }
 
 

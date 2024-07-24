@@ -84,13 +84,6 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
             quickAdapterHelper.getTrailingLoadStateAdapter().checkDisableLoadMoreIfNotFullPage();
         }
 
-
-        if(getBaseQuickAdapter().getItemCount() > 0){
-            getSuperRecyclerView().hideEmpty();
-        }else{
-            getSuperRecyclerView().showEmpty();
-        }
-
         if(isHasMore == null){
             if(quickAdapterHelper.getTrailingLoadStateAdapter().isAutoLoadMore()){
                 //开启了分页的功能
