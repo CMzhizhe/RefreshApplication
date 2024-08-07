@@ -142,7 +142,7 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
       * @param isHasMore 可选参数
       */
     public void finishLoadAndUpdateData(List list,Boolean isHasMore) {
-        if(mRefreshModuleImpl!=null){
+        if(mRefreshModuleImpl!=null && smartRefreshLayout.isRefreshing()){
             smartRefreshLayout.finishRefresh();
         }
 
