@@ -3,6 +3,7 @@ package com.gxx.supersmartrefreshlayoutlibrary.base;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -35,7 +36,7 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     protected volatile boolean isLoadingData = false;//是否正在请求数据，包含，上拉于下拉
     protected WeakReference<OnMALoadMoreListener> onMAFLoadMoreListenerWeakReference = null;
     protected WeakReference<OnMARefreshListener> onMAFRefreshListenerWeakReference = null;//下拉刷新
-
+    protected View emptyView = null;
 
     public AbsSuperRefreshRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -56,21 +57,32 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     }
 
 
-
-
     /**
      * 设置背景色
      * R.color.white
      */
     public void setAbsBackGroundColor(int color) {
-        smartRefreshLayout.setBackgroundColor(getResources().getColor(color));
+        if(smartRefreshLayout!=null)
+             smartRefreshLayout.setBackgroundColor(getResources().getColor(color));
     }
 
     /**
      * 设置Drawable
      */
     public void setAbsBackDrawable(Drawable drawable) {
-        smartRefreshLayout.setBackground(drawable);
+        if (smartRefreshLayout!=null)
+              smartRefreshLayout.setBackground(drawable);
+    }
+
+
+    /**
+     * 设置空视图,只有集合是空的时候才有效果
+     */
+    public void setEmptyView(int layoutResId,FrameLayout.LayoutParams layoutParams){
+        if(emptyView == null){
+            emptyView = LayoutInflater.from(getContext()).inflate(layoutResId,this,true);
+            emptyView.setLayoutParams(layoutParams);
+        }
     }
 
 
@@ -183,7 +195,9 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     public abstract void setEnableLoadMore(boolean b);
 
 
-
+    public View getEmptyView() {
+        return emptyView;
+    }
 
     public SmartRefreshLayout getSmartRefreshLayout() {
         return smartRefreshLayout;
@@ -201,6 +215,7 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }
+
 
 
     public void setOnMAFRefreshListener(OnMARefreshListener onMARefreshListener) {

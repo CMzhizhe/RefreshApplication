@@ -60,12 +60,16 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
       * @param isHasMore 如果不是null，将以isHasMore为准，不会以数量为准
       */
     public void finishLoadAndUpdateData(List list,Boolean isHasMore) {
+        if(quickAdapterHelper == null || quickAdapterHelper.getTrailingLoadStateAdapter() == null){
+            return;
+        }
+
         //按数量来计算
         if (list != null) {
             if (loadMorePageIndex == 1) {
                 getBaseQuickAdapter().submitList(list);
             } else {
-                if (list.size() <= 0 && loadMorePageIndex > 1) {
+                if (list.isEmpty() && loadMorePageIndex > 1) {
                     loadMorePageIndex = loadMorePageIndex - 1;
                 }
                 getBaseQuickAdapter().addAll(list);
@@ -105,6 +109,9 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
     }
 
     public void setLoadMorePageIndex(int loadMorePageIndex) {
+        if(quickAdapterHelper == null){
+            return;
+        }
         this.loadMorePageIndex = loadMorePageIndex;
         if(loadMorePageIndex == 1 && quickAdapterHelper.getTrailingLoadStateAdapter()!=null && quickAdapterHelper.getTrailingLoadStateAdapter().isAutoLoadMore()){
             //重置状态
@@ -116,6 +123,10 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
       * 是否可以加载更多
       */
     public void setAutoLoadMore(boolean b){
+        if(quickAdapterHelper == null || quickAdapterHelper.getTrailingLoadStateAdapter() == null){
+            return;
+        }
+
         quickAdapterHelper.getTrailingLoadStateAdapter().setAutoLoadMore(b);
     }
 

@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.chad.library.adapter4.BaseQuickAdapter;
 import com.gxx.supersmartrefreshlayoutlibrary.R;
 import com.gxx.supersmartrefreshlayoutlibrary.base.AbsSuperRefreshRecyclerView;
@@ -19,7 +18,6 @@ import com.gxx.supersmartrefreshlayoutlibrary.recyclerview.loadmodelimpl.basequi
 import com.gxx.supersmartrefreshlayoutlibrary.recyclerview.loadmodelimpl.basequickimpl.RefreshModuleImpl;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -108,18 +106,6 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
         }
     }
 
-    /**
-      * 设置空视图,只有集合是空的时候才有效果
-      */
-    public void setEmptyView(Context context,int layoutResId){
-        if(mBaseQuickAdapter!=null){
-            if(!mBaseQuickAdapter.isStateViewEnable()){
-                mBaseQuickAdapter.setStateViewEnable(true);
-            }
-            mBaseQuickAdapter.setStateViewLayout(context,layoutResId);
-        }
-    }
-
 
     /**
       * 第一次触发刷新
@@ -151,6 +137,16 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
         }
 
         setLoadingData(false);
+
+
+        if(getEmptyView()!=null && getLoadMorePageIndex() == 1){
+           if ((list == null || list.isEmpty())){
+               getEmptyView().setVisibility(View.VISIBLE);
+           }else {
+               getEmptyView().setVisibility(View.GONE);
+           }
+        }
+
     }
 
 
@@ -229,7 +225,6 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
             onMAFLoadMoreListenerWeakReference.get().onLoadMore();
         }
     }
-
 
 
     /**
