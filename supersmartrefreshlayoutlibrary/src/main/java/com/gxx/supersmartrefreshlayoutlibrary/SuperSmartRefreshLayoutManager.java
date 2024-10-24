@@ -15,7 +15,7 @@ public class SuperSmartRefreshLayoutManager {
     private String refreshIngText;//正在刷新
     private String networkUnavailableText;//当前网络不可用
     private boolean isDeveloper = false;//是否开发者
-    private int pageCount = 10;//默认条数
+    private int pageCount = 20;//默认条数
     private static SuperSmartRefreshLayoutManager mSuperSmartRefreshLayoutManager = null;
 
     private SuperSmartRefreshLayoutManager() {

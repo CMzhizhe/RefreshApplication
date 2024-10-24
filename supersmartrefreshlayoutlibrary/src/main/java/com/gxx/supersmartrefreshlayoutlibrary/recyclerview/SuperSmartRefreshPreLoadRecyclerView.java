@@ -87,20 +87,19 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
         this.recyclerView.setLayoutManager(layoutManager);
         this.smartRefreshLayout.setEnableLoadMore(false);
         this.mBaseQuickAdapter = adapter;
+        this.smartRefreshLayout.setEnableRefresh(onMARefreshListener!=null);
+
+        setOnMAFRefreshListener(onMARefreshListener);
 
         if (onMARefreshListener!=null){
-            this.onMAFRefreshListenerWeakReference = new WeakReference<OnMARefreshListener>(onMARefreshListener);
-            smartRefreshLayout.setEnableRefresh(true);
             mRefreshModuleImpl = new RefreshModuleImpl(this,adapter,smartRefreshLayout);
             mRefreshModuleImpl.setOnRefreshCallListener(this);
-        }else {
-            smartRefreshLayout.setEnableRefresh(false);
         }
 
-
+        setOnMALoadMoreListener(onMALoadMoreListener);
         mLoadMoreModuleImpl = new LoadMoreModuleImpl(this,adapter);
+        mLoadMoreModuleImpl.setAutoLoadMore(onMALoadMoreListener!=null);
         if(onMALoadMoreListener!=null){
-            this.onMAFLoadMoreListenerWeakReference = new WeakReference<OnMALoadMoreListener>(onMALoadMoreListener);
             mLoadMoreModuleImpl.setOnLoadMoreLoadListener(this);
             mLoadMoreModuleImpl.setPreLoadSize(preLoadNumber);
         }
@@ -206,7 +205,8 @@ public class SuperSmartRefreshPreLoadRecyclerView extends AbsSuperRefreshRecycle
     }
 
     /**
-     * 不满一屏幕，是否不去自动触发loadMore操作
+     * 不满一屏幕，自动触发loadMore操作
+     * @param isNotFullToAutoMore true 不满一屏幕，不要去触发加载更多的操作
      */
     public void setNotFullToAutoMore(boolean isNotFullToAutoMore){
         if (mLoadMoreModuleImpl!=null){

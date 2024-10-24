@@ -212,6 +212,9 @@ public abstract class AbsSuperRefreshRecyclerView extends FrameLayout {
         return pageCount;
     }
 
+    /**
+      * 设置，每一页的条数，默认20条数据
+      */
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }

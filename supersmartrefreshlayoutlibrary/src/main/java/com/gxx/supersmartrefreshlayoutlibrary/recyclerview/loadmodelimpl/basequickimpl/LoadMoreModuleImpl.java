@@ -20,13 +20,11 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
     private OnLoadMoreLoadListener onLoadMoreLoadListener = null;
     private int loadMorePageIndex = 1;//页码数
     private QuickAdapterHelper quickAdapterHelper;
-    private boolean isNotFullToAutoMore = false;
+    private boolean isNotFullToAutoMore = false;//默认，不满一屏幕，不要去触发
 
     public LoadMoreModuleImpl(SuperSmartRefreshPreLoadRecyclerView superSmartRefreshPreLoadRecyclerView, BaseQuickAdapter baseQuickAdapter) {
         super(superSmartRefreshPreLoadRecyclerView, baseQuickAdapter);
         quickAdapterHelper = new QuickAdapterHelper.Builder(baseQuickAdapter).setTrailingLoadStateAdapter(new DefaultTrailingLoadStateAdapter().setOnLoadMoreListener(this)).build();
-        quickAdapterHelper.getTrailingLoadStateAdapter().setPreloadSize(1);
-        quickAdapterHelper.getTrailingLoadStateAdapter().setAutoLoadMore(getSuperRecyclerView().getOnMAFLoadMoreListenerWeakReference() != null && getSuperRecyclerView().getOnMAFLoadMoreListenerWeakReference().get()!=null);
         superSmartRefreshPreLoadRecyclerView.getRecyclerView().setAdapter(quickAdapterHelper.getAdapter());
     }
 
@@ -83,10 +81,15 @@ public class LoadMoreModuleImpl extends AbsModelImpl implements TrailingLoadStat
             }
         }
 
+        if (onLoadMoreLoadListener == null){
+            return;
+        }
+
         //不满一屏幕，不要去自动触发加载更多
         if(isNotFullToAutoMore){
             quickAdapterHelper.getTrailingLoadStateAdapter().checkDisableLoadMoreIfNotFullPage();
         }
+
 
         if(isHasMore == null){
             if(quickAdapterHelper.getTrailingLoadStateAdapter().isAutoLoadMore()){
